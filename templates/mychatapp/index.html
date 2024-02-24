@@ -1,0 +1,51 @@
+{% extends "mychatapp/base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+    <div class="center">
+        <div class="contacts">
+            
+            <h2>
+                Contacts
+            </h2>
+            
+            {% for friend in friends %}
+            <a href="{% url 'detail' friend.profiles.id %}" class="contact" style="list-style: none;">
+                <div class="pic rogers" style="background-image: url({{friend.profiles.pic.url}});"></div>
+                <div class="badge">
+                14
+                </div>
+                <div class="name">
+                {{ friend.profiles.name }}
+                </div>
+                <div class="message">
+                That is America's ass 🇺🇸🍑
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <!-- Chat -->
+        
+    </div>
+
+<script>
+
+    setInterval(getNotification, 1000)
+    function getNotification() {
+        let url = "{% url 'notification' %}"
+        fetch(url)
+        .then(res => res.json())
+        .then(data=>{
+            console.log(data)
+            let chatNotificationBtn = document.getElementsByClassName("badge")
+            for (let i = 0; i < data.length; i++) {
+                chatNotificationBtn[i].innerText = data[i]
+                
+            }
+        })
+        .catch(error => console.log(error))
+    }
+
+</script>
+{% endblock content %}
